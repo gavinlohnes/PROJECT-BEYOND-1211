@@ -38,10 +38,8 @@ body {
   padding: 0;
   overflow-x: hidden;
   text-transform: uppercase;
-  /* Prevent zoom on iOS */
   -webkit-user-scalable: no;
   user-scalable: no;
-  /* Prevent rubber-band scroll */
   overscroll-behavior: none;
 }
 
@@ -95,7 +93,6 @@ body {
   display: inline-block;
   width: 56px;
   height: 28px;
-  /* Better touch target */
   min-height: 44px;
   min-width: 44px;
 }
@@ -146,7 +143,6 @@ input:checked + .slider:before {
   position: sticky;
   top: 0;
   z-index: 100;
-  /* Better scrolling */
   overflow-x: auto;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
@@ -163,7 +159,6 @@ input:checked + .slider:before {
   letter-spacing: 1px;
   cursor: pointer;
   transition: color 0.2s, background 0.2s;
-  /* Better touch target */
   min-height: 44px;
   display: flex;
   align-items: center;
@@ -329,7 +324,6 @@ input:checked + .slider:before {
   font-weight: 600;
   text-align: center;
   outline: none;
-  /* Ensure keyboard doesn't cover input */
   padding: 4px 0;
 }
 
@@ -357,6 +351,82 @@ input:checked + .slider:before {
   font-weight: 700;
 }
 
+/* ═══════════ ANALYTICS ═══════════ */
+.analytics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 15px;
+}
+
+.stat-card {
+  background: var(--panel);
+  border: 2px solid var(--border);
+  padding: 15px;
+  border-radius: 2px;
+  text-align: center;
+}
+
+.stat-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.stat-value {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--cyan);
+  margin-bottom: 4px;
+}
+
+.stat-meta {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.65rem;
+  color: #666;
+}
+
+.history-list {
+  padding: 15px;
+  max-height: 400px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.history-entry {
+  background: rgba(255, 0, 0, 0.05);
+  border-left: 3px solid var(--accent);
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  border-radius: 2px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.75rem;
+}
+
+.history-entry-date {
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.history-entry-data {
+  color: var(--cyan);
+  margin: 2px 0;
+}
+
+.pr-badge {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 2px;
+  font-size: 0.6rem;
+  margin-left: 6px;
+  font-weight: 700;
+}
+
 /* ═══════════ BUTTONS ═══════════ */
 .btn {
   width: 100%;
@@ -369,7 +439,6 @@ input:checked + .slider:before {
   cursor: pointer;
   transition: all 0.2s;
   border-radius: 2px;
-  /* Better touch target */
   min-height: 44px;
   display: flex;
   align-items: center;
@@ -419,7 +488,7 @@ input:checked + .slider:before {
   border-top: 2px solid var(--border);
 }
 
-/* ═══════════ SETTINGS MODAL ═══════════ */
+/* ═══════════ MODALS ═══════════ */
 .modal {
   display: none;
   position: fixed;
@@ -549,6 +618,10 @@ input:checked + .slider:before {
     min-height: 44px;
     font-size: 0.75rem;
   }
+
+  .analytics-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ═══════════ ACCESSIBILITY ═══════════ */
@@ -560,7 +633,6 @@ input:checked + .slider:before {
   }
 }
 
-/* High contrast mode for accessibility */
 @media (prefers-contrast: more) {
   :root {
     --border: #4a1010;
@@ -574,14 +646,6 @@ input:checked + .slider:before {
 
   .tab.active {
     border-bottom: 4px solid var(--accent);
-  }
-}
-
-/* Dark mode detection (already dark, but future-proof) */
-@media (prefers-color-scheme: light) {
-  /* Force dark theme regardless */
-  :root {
-    --bg: #000000;
   }
 }
 
@@ -608,6 +672,7 @@ input:checked + .slider:before {
   <div class="tab" onclick="app.switchTab('push', this)">PUSH</div>
   <div class="tab" onclick="app.switchTab('pull', this)">PULL</div>
   <div class="tab" onclick="app.switchTab('upper', this)">UPPER</div>
+  <div class="tab" onclick="app.switchTab('analytics', this)">STATS</div>
   <div class="tab" onclick="app.openSettings()">OPTS</div>
 </div>
 
@@ -626,8 +691,8 @@ input:checked + .slider:before {
       <div id="target-prot" class="tile-val">175G</div>
     </div>
     <div class="tile">
-      <div class="tile-label">STEP GOAL</div>
-      <div class="tile-val">10,000</div>
+      <div class="tile-label">WEEK VOLUME</div>
+      <div id="week-volume" class="tile-val" style="color:var(--green)">0 LBS</div>
     </div>
   </div>
 
@@ -646,6 +711,22 @@ input:checked + .slider:before {
 </div>
 
 <div id="workout-container" style="display:none; padding: 0 15px 40px 15px;"></div>
+
+<div id="tab-analytics" style="display:none; padding-bottom: 40px;">
+  <div class="analytics-grid" id="analytics-stats"></div>
+  <div class="card">
+    <div class="card-header"><div class="card-title">// PERSONAL RECORDS</div></div>
+    <div id="pr-list" class="card-body" style="min-height: 200px;"></div>
+  </div>
+  <div class="card">
+    <div class="card-header"><div class="card-title">// SESSION HISTORY</div></div>
+    <div id="history-list" class="history-list"></div>
+  </div>
+  <div style="padding: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+    <button class="btn btn-secondary" onclick="app.exportCSV()">EXPORT CSV</button>
+    <button class="btn btn-danger" onclick="app.confirmClearData()">CLEAR DATA</button>
+  </div>
+</div>
 
 <!-- SETTINGS MODAL -->
 <div id="settings-modal" class="modal">
@@ -705,7 +786,8 @@ const app = {
     return {
       dutyMode: false,
       proteinTarget: 175,
-      workouts: {}
+      workouts: {},
+      sessions: [] // Array of completed sessions
     };
   },
 
@@ -803,7 +885,6 @@ const app = {
       localStorage.removeItem(STORAGE_KEY);
       this.cancelConfirm();
       this.showToast('All data cleared', 'success');
-      // Reload to reset UI
       setTimeout(() => location.reload(), 500);
     }
   },
@@ -816,12 +897,20 @@ const app = {
     
     const cont = document.getElementById('workout-container');
     const dash = document.getElementById('tab-dash');
+    const analytics = document.getElementById('tab-analytics');
     
     if (tab === 'dash') {
       dash.style.display = 'block';
       cont.style.display = 'none';
+      analytics.style.display = 'none';
+    } else if (tab === 'analytics') {
+      dash.style.display = 'none';
+      cont.style.display = 'none';
+      analytics.style.display = 'block';
+      this.renderAnalytics();
     } else {
       dash.style.display = 'none';
+      analytics.style.display = 'none';
       cont.style.display = 'block';
       this.renderWorkout(tab);
     }
@@ -873,10 +962,17 @@ const app = {
     const rows = document.querySelectorAll('.workout-row');
     const data = this.getStoredData();
     const workoutData = {};
+    const sessionData = {
+      date: new Date().toISOString().split('T')[0],
+      type: workoutKey,
+      exercises: []
+    };
     let hasErrors = false;
+    let totalVolume = 0;
 
     rows.forEach((row, idx) => {
       const inputs = row.querySelectorAll('input[type="number"]');
+      const exerciseName = row.querySelector('.ex-name').textContent;
       const validation = this.validateWorkoutRow(inputs);
       
       if (!validation.isValid) {
@@ -886,6 +982,16 @@ const app = {
           lbs: validation.lbs,
           reps: validation.reps
         };
+        // Volume = weight × reps × sets (3)
+        const volume = validation.lbs * validation.reps * 3;
+        totalVolume += volume;
+        sessionData.exercises.push({
+          name: exerciseName,
+          lbs: validation.lbs,
+          reps: validation.reps,
+          sets: 3,
+          volume: volume
+        });
       }
     });
 
@@ -894,9 +1000,17 @@ const app = {
       return;
     }
 
+    if (sessionData.exercises.length === 0) {
+      this.showToast('Enter at least one exercise', 'error');
+      return;
+    }
+
+    sessionData.totalVolume = totalVolume;
     data.workouts[workoutKey] = workoutData;
+    data.sessions.push(sessionData);
     this.setStoredData(data);
-    this.showToast(`${workoutKey.toUpperCase()} session saved`, 'success');
+    this.updateWeeklyVolume();
+    this.showToast(`${workoutKey.toUpperCase()} session saved • ${totalVolume} lbs volume`, 'success');
   },
 
   resetWorkout(workoutKey) {
@@ -906,6 +1020,143 @@ const app = {
         input.closest('.input-box').classList.remove('error');
       });
     });
+  },
+
+  // ═══════════ ANALYTICS ═══════════
+  renderAnalytics() {
+    const data = this.getStoredData();
+    const sessions = data.sessions || [];
+
+    // Weekly volume
+    const weekVolume = this.getWeeklyVolume(sessions);
+    const totalSessions = sessions.length;
+    const avgVolume = totalSessions > 0 ? Math.round(weekVolume / Math.max(1, this.getWeeksCount(sessions))) : 0;
+
+    // PRs per exercise
+    const prs = this.calculatePRs(sessions);
+
+    let statsHtml = `
+      <div class="stat-card">
+        <div class="stat-label">WEEK VOLUME</div>
+        <div class="stat-value">${weekVolume.toLocaleString()}</div>
+        <div class="stat-meta">lbs moved</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">SESSIONS</div>
+        <div class="stat-value">${totalSessions}</div>
+        <div class="stat-meta">workouts logged</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">AVG VOLUME</div>
+        <div class="stat-value">${avgVolume.toLocaleString()}</div>
+        <div class="stat-meta">lbs/week</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">PR COUNT</div>
+        <div class="stat-value">${Object.keys(prs).length}</div>
+        <div class="stat-meta">tracked lifts</div>
+      </div>
+    `;
+
+    document.getElementById('analytics-stats').innerHTML = statsHtml;
+
+    // PRs list
+    let prHtml = '';
+    if (Object.keys(prs).length === 0) {
+      prHtml = '<p style="color: #666; font-family: Share Tech Mono; text-align: center; padding: 20px;">No PRs recorded yet. Start logging!</p>';
+    } else {
+      Object.entries(prs).forEach(([exercise, pr]) => {
+        prHtml += `
+          <div class="history-entry">
+            <div class="history-entry-date">${exercise}</div>
+            <div class="history-entry-data">${pr.lbs} lbs × ${pr.reps} reps <span class="pr-badge">PR</span></div>
+            <div class="stat-meta">${pr.date}</div>
+          </div>
+        `;
+      });
+    }
+    document.getElementById('pr-list').innerHTML = prHtml;
+
+    // Session history
+    let historyHtml = '';
+    if (sessions.length === 0) {
+      historyHtml = '<p style="color: #666; font-family: Share Tech Mono; text-align: center; padding: 20px;">No sessions logged yet.</p>';
+    } else {
+      sessions.slice().reverse().forEach(session => {
+        const exList = session.exercises.map(ex => `${ex.name} (${ex.lbs}×${ex.reps})`).join(', ');
+        historyHtml += `
+          <div class="history-entry">
+            <div class="history-entry-date">${session.date} • ${session.type.toUpperCase()}</div>
+            <div class="history-entry-data" style="font-size: 0.7rem;">${exList}</div>
+            <div class="stat-meta">${session.totalVolume} lbs total volume</div>
+          </div>
+        `;
+      });
+    }
+    document.getElementById('history-list').innerHTML = historyHtml;
+  },
+
+  calculatePRs(sessions) {
+    const prs = {};
+    sessions.forEach(session => {
+      session.exercises.forEach(ex => {
+        if (!prs[ex.name] || ex.lbs > prs[ex.name].lbs || (ex.lbs === prs[ex.name].lbs && ex.reps > prs[ex.name].reps)) {
+          prs[ex.name] = {
+            lbs: ex.lbs,
+            reps: ex.reps,
+            date: session.date
+          };
+        }
+      });
+    });
+    return prs;
+  },
+
+  getWeeklyVolume(sessions) {
+    const now = new Date();
+    const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+    return sessions
+      .filter(s => new Date(s.date) >= weekAgo)
+      .reduce((total, s) => total + (s.totalVolume || 0), 0);
+  },
+
+  getWeeksCount(sessions) {
+    if (sessions.length === 0) return 1;
+    const first = new Date(sessions[0].date);
+    const last = new Date(sessions[sessions.length - 1].date);
+    return Math.ceil((last - first) / (7 * 24 * 60 * 60 * 1000)) || 1;
+  },
+
+  updateWeeklyVolume() {
+    const data = this.getStoredData();
+    const weekVolume = this.getWeeklyVolume(data.sessions || []);
+    document.getElementById('week-volume').textContent = weekVolume.toLocaleString() + ' LBS';
+  },
+
+  exportCSV() {
+    const data = this.getStoredData();
+    const sessions = data.sessions || [];
+    
+    if (sessions.length === 0) {
+      this.showToast('No data to export', 'error');
+      return;
+    }
+
+    let csv = 'Date,Workout Type,Exercise,Weight (lbs),Reps,Sets,Volume (lbs)\n';
+    sessions.forEach(session => {
+      session.exercises.forEach(ex => {
+        csv += `${session.date},${session.type},${ex.name},${ex.lbs},${ex.reps},${ex.sets},${ex.volume}\n`;
+      });
+    });
+
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `nightwatch_${new Date().toISOString().split('T')[0]}.csv`;
+    a.click();
+    window.URL.revokeObjectURL(url);
+    this.showToast('Data exported', 'success');
   },
 
   // ═══════════ CLOCK & FASTING STATUS ═══════════
@@ -937,7 +1188,10 @@ const app = {
     const data = this.getStoredData();
     const dutyToggle = document.getElementById('duty-toggle');
     dutyToggle.checked = data.dutyMode;
-    this.toggleDuty(); // Update UI
+    this.toggleDuty();
+
+    // Update weekly volume on dash
+    this.updateWeeklyVolume();
 
     // Start clock
     setInterval(() => this.updateClock(), 60000);
