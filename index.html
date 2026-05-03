@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>NIGHTWATCH BEYOND // LOHNES</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #000000;
+  --bg2: #0a0000;
+  --panel: #0f0000;
+  --border: #2a0808;
+  --text: #e0e0e0;
+  --accent: #ff0000;
+  --gold: #c5a059;
+  --cyan: #00f2ff;
+  --green: #00ff88;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Rajdhani', sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  text-transform: uppercase;
+}
+
+/* ═══════════ TOP NAV / HUD ═══════════ */
+.header-hud {
+  padding: 20px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg, var(--panel) 0%, var(--bg) 100%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-block {
+  border-left: 3px solid var(--accent);
+  padding-left: 12px;
+}
+
+.logo-main {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 900;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  color: #fff;
+}
+
+.logo-sub {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--accent);
+}
+
+/* ═══════════ DUTY TOGGLE ═══════════ */
+.toggle-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.switch input { opacity: 0; width: 0; height: 0; }
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #1a0505;
+  border: 1px solid var(--border);
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px; width: 16px;
+  left: 4px; bottom: 3px;
+  background-color: var(--accent);
+  transition: .4s;
+  box-shadow: 0 0 10px var(--accent);
+}
+
+input:checked + .slider { background-color: #300; }
+input:checked + .slider:before { transform: translateX(24px); }
+
+/* ═══════════ TABS ═══════════ */
+.tab-bar {
+  display: flex;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.tab {
+  flex: 1;
+  padding: 15px 5px;
+  text-align: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.7rem;
+  color: #444;
+  letter-spacing: 1px;
+}
+
+.tab.active {
+  color: var(--accent);
+  border-bottom: 2px solid var(--accent);
+  background: rgba(255,0,0,0.05);
+}
+
+/* ═══════════ HUD TILES ═══════════ */
+.hud-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 15px;
+}
+
+.tile {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 15px;
+  position: relative;
+  overflow: hidden;
+}
+
+.tile::after {
+  content: "";
+  position: absolute;
+  top: 0; right: 0;
+  width: 20px; height: 20px;
+  background: linear-gradient(45deg, transparent 50%, var(--border) 50%);
+}
+
+.tile-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--gold);
+}
+
+.tile-val {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-top: 5px;
+  color: #fff;
+}
+
+/* ═══════════ CARDS ═══════════ */
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  margin: 15px;
+  padding: 0;
+}
+
+.card-header {
+  background: rgba(255,0,0,0.1);
+  padding: 10px 15px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.8rem;
+  color: var(--accent);
+}
+
+.card-body { padding: 15px; }
+
+/* ═══════════ WORKOUT TABLE ═══════════ */
+.workout-row {
+  border-bottom: 1px solid var(--border);
+  padding: 15px 0;
+}
+
+.ex-info { margin-bottom: 10px; }
+.ex-name { font-family: 'Orbitron'; font-size: 0.9rem; color: #fff; }
+
+.input-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+.input-box {
+  background: #000;
+  border: 1px solid var(--border);
+  padding: 8px;
+  text-align: center;
+}
+
+.input-box label {
+  display: block;
+  font-size: 0.6rem;
+  color: var(--gold);
+  margin-bottom: 3px;
+}
+
+.input-box input {
+  background: transparent;
+  border: none;
+  color: #fff;
+  width: 100%;
+  font-family: 'Share Tech Mono';
+  font-size: 1.1rem;
+  text-align: center;
+  outline: none;
+}
+
+/* ═══════════ SETTINGS MODAL ═══════════ */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.9);
+  z-index: 1000;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.modal-content {
+  background: var(--panel);
+  border: 1px solid var(--accent);
+  padding: 20px;
+  max-width: 400px;
+  margin: auto;
+}
+
+</style>
+</head>
+<body>
+
+<div class="header-hud">
+  <div class="logo-block">
+    <div class="logo-main">NIGHTWATCH</div>
+    <div class="logo-sub">UNIT 210-165 // BEYOND</div>
+  </div>
+  <div class="toggle-group">
+    <div class="logo-sub" id="status-text" style="color:var(--gold)">OFF-DUTY</div>
+    <label class="switch">
+      <input type="checkbox" id="duty-toggle" onchange="toggleDuty()">
+      <span class="slider"></span>
+    </label>
+  </div>
+</div>
+
+<div class="tab-bar">
+  <div class="tab active" onclick="setTab('dash', this)">DASH</div>
+  <div class="tab" onclick="setTab('push', this)">PUSH</div>
+  <div class="tab" onclick="setTab('pull', this)">PULL</div>
+  <div class="tab" onclick="setTab('upper', this)">UPPER</div>
+  <div class="tab" onclick="openSettings()">OPTS</div>
+</div>
+
+<div id="tab-dash">
+  <div class="hud-grid">
+    <div class="tile">
+      <div class="tile-label">STATUS</div>
+      <div id="fast-status" class="tile-val">--</div>
+    </div>
+    <div class="tile">
+      <div class="tile-label">CALORIES</div>
+      <div id="target-cal" class="tile-val" style="color:var(--gold)">1,899</div>
+    </div>
+    <div class="tile">
+      <div class="tile-label">PROTEIN</div>
+      <div id="target-prot" class="tile-val">175G</div>
+    </div>
+    <div class="tile">
+      <div class="tile-label">STEP GOAL</div>
+      <div class="tile-val">10,000</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-title">// CURRENT PROTOCOL</div></div>
+    <div class="card-body">
+      <div style="font-family:'Share Tech Mono'; font-size:0.85rem; color:#aaa; line-height:1.6;">
+        FAST ENDS: <span style="color:#fff">19:30</span><br>
+        MEAL 1: <span style="color:#fff">7:30 PM (700 CAL)</span><br>
+        MEAL 2: <span style="color:#fff">11:30 PM (700 CAL)</span><br>
+        MEAL 3: <span style="color:#fff">02:30 AM (OATS+PB+SHAKE)</span><br>
+        FAST STARTS: <span style="color:var(--cyan)">03:30 AM</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="workout-container" style="display:none; padding: 0 15px 40px 15px;"></div>
+
+<!-- SETTINGS MODAL -->
+<div id="settings-modal" class="modal">
+  <div class="modal-content">
+    <div class="card-title" style="margin-bottom:20px">// SYSTEM SETTINGS</div>
+    <div class="input-box" style="margin-bottom:10px">
+      <label>ADJUST PROTEIN (G)</label>
+      <input type="number" id="set-prot" value="175">
+    </div>
+    <button onclick="saveSettings()" style="width:100%; padding:15px; background:var(--accent); color:#fff; border:none; font-family:'Orbitron';">UPDATE SYSTEM</button>
+    <button onclick="closeSettings()" style="width:100%; padding:10px; background:transparent; color:#666; border:none; font-family:'Orbitron'; margin-top:10px;">CANCEL</button>
+  </div>
+</div>
+
+<script>
+const DATA = {
+  push: ["Dumbbell Bench Press", "Incline DB Press", "Shoulder Press", "Lateral Raises", "Triceps Pushdowns", "Push-ups to Failure"],
+  pull: ["Lat Pulldown", "Seated Cable Row", "Dumbbell Row", "DB Bicep Curl", "Hammer Curl", "Cable Burnout"],
+  upper: ["Incline Press", "Lat Pulldown (Alt)", "Lateral Raises", "Bicep Curl", "Tricep Ext", "Hammer Curl"]
+};
+
+function toggleDuty() {
+  const isDuty = document.getElementById('duty-toggle').checked;
+  document.getElementById('status-text').textContent = isDuty ? "ON-SHIFT" : "OFF-DUTY";
+  document.getElementById('status-text').style.color = isDuty ? "var(--accent)" : "var(--gold)";
+  document.getElementById('target-cal').textContent = isDuty ? "2,089" : "1,899";
+  document.getElementById('target-cal').style.color = isDuty ? "var(--accent)" : "var(--gold)";
+}
+
+function setTab(tab, el) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  const cont = document.getElementById('workout-container');
+  const dash = document.getElementById('tab-dash');
+  
+  if(tab === 'dash') {
+    dash.style.display = 'block'; cont.style.display = 'none';
+  } else {
+    dash.style.display = 'none'; cont.style.display = 'block';
+    cont.innerHTML = `<div class="card-title" style="margin:20px 0 10px 0">// ${tab.toUpperCase()} SESSION</div>` + 
+    DATA[tab].map(ex => `
+      <div class="workout-row">
+        <div class="ex-info"><span class="ex-name">${ex}</span></div>
+        <div class="input-group">
+          <div class="input-box"><label>LBS</label><input type="number" placeholder="0"></div>
+          <div class="input-group" style="grid-column: span 2;">
+            <div class="input-box"><label>REPS (8-12)</label><input type="number" placeholder="0"></div>
+            <div class="input-box"><label>SETS</label><div style="font-family:'Orbitron'; color:var(--accent); font-size:1.1rem; padding-top:4px;">3</div></div>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+}
+
+function updateClock() {
+  const now = new Date();
+  const time = now.getHours() + (now.getMinutes()/60);
+  const isFast = (time >= 3.5 && time < 19.5);
+  const el = document.getElementById('fast-status');
+  el.textContent = isFast ? "FASTING" : "FEEDING";
+  el.style.color = isFast ? "var(--cyan)" : "var(--green)";
+}
+
+function openSettings() { document.getElementById('settings-modal').style.display = 'flex'; }
+function closeSettings() { document.getElementById('settings-modal').style.display = 'none'; }
+function saveSettings() {
+  const prot = document.getElementById('set-prot').value;
+  document.getElementById('target-prot').textContent = prot + "G";
+  closeSettings();
+}
+
+setInterval(updateClock, 60000);
+updateClock();
+</script>
+</body>
+</html>
