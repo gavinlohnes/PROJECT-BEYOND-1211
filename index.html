@@ -19,6 +19,7 @@
   --cyan: #00f2ff;
   --green: #00ff88;
   --error: #ff4444;
+  --warning: #ffaa00;
 }
 
 * {
@@ -86,6 +87,7 @@ body {
 
 .toggle-group .logo-sub {
   min-height: 16px;
+  font-size: 0.65rem;
 }
 
 .switch {
@@ -150,11 +152,11 @@ input:checked + .slider:before {
 
 .tab {
   flex: 1;
-  min-width: 60px;
-  padding: 16px 8px;
+  min-width: 55px;
+  padding: 16px 6px;
   text-align: center;
   font-family: 'Orbitron', sans-serif;
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   color: #555;
   letter-spacing: 1px;
   cursor: pointer;
@@ -259,6 +261,136 @@ input:checked + .slider:before {
   line-height:1.6;
 }
 
+/* ═══════════ SHIFT INDICATOR ═══════════ */
+.shift-banner {
+  background: rgba(255, 170, 0, 0.15);
+  border-left: 4px solid var(--warning);
+  padding: 12px 15px;
+  margin: 15px 15px 0 15px;
+  border-radius: 2px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--warning);
+}
+
+.shift-banner.active {
+  background: rgba(255, 68, 68, 0.15);
+  border-left-color: var(--error);
+  color: var(--error);
+}
+
+/* ═══════════ METRICS DASHBOARD ═══════════ */
+.metrics-container {
+  padding: 0 15px 40px 15px;
+}
+
+.metric-section {
+  margin-bottom: 20px;
+}
+
+.metric-section-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.8rem;
+  color: var(--accent);
+  margin: 20px 0 12px 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--border);
+}
+
+.metric-card {
+  background: var(--panel);
+  border: 2px solid var(--border);
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 2px;
+}
+
+.metric-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.metric-row:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.metric-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--gold);
+  flex: 1;
+}
+
+.metric-value {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--cyan);
+  text-align: right;
+  min-width: 100px;
+}
+
+.metric-trending {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.65rem;
+  color: #666;
+  text-align: right;
+}
+
+.metric-input-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.metric-input-box {
+  background: #000;
+  border: 2px solid var(--border);
+  padding: 10px 8px;
+  text-align: center;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.metric-input-box label {
+  display: block;
+  font-size: 0.65rem;
+  color: var(--gold);
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.metric-input-box input {
+  background: transparent;
+  border: none;
+  color: #fff;
+  width: 100%;
+  font-family: 'Share Tech Mono';
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  outline: none;
+  padding: 4px 0;
+}
+
+.metric-input-box input:focus {
+  color: var(--cyan);
+  background: rgba(0, 242, 255, 0.05);
+}
+
+.metric-input-box input::placeholder {
+  color: #555;
+}
+
 /* ═══════════ WORKOUT TABLE ═══════════ */
 .workout-row {
   border-bottom: 1px solid var(--border);
@@ -351,6 +483,114 @@ input:checked + .slider:before {
   font-weight: 700;
 }
 
+.notes-section {
+  margin-top: 15px;
+  padding: 12px;
+  background: #000;
+  border: 2px solid var(--border);
+  border-radius: 2px;
+}
+
+.notes-label {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--gold);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.notes-input {
+  background: transparent;
+  border: none;
+  color: #fff;
+  width: 100%;
+  font-family: 'Share Tech Mono';
+  font-size: 0.85rem;
+  outline: none;
+  resize: vertical;
+  min-height: 60px;
+}
+
+.notes-input::placeholder {
+  color: #555;
+}
+
+.notes-input:focus {
+  color: var(--cyan);
+}
+
+/* ═══════════ BUTTONS ═══════════ */
+.btn {
+  width: 100%;
+  padding: 14px;
+  border: 2px solid transparent;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-radius: 2px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.btn-primary:active {
+  background: #cc0000;
+  box-shadow: 0 0 10px var(--accent);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: #666;
+  border-color: var(--border);
+}
+
+.btn-secondary:active {
+  color: var(--gold);
+  border-color: var(--gold);
+}
+
+.btn-danger {
+  background: rgba(255, 68, 68, 0.1);
+  color: var(--error);
+  border-color: var(--error);
+}
+
+.btn-danger:active {
+  background: rgba(255, 68, 68, 0.2);
+  box-shadow: 0 0 10px var(--error);
+}
+
+.btn-warning {
+  background: rgba(255, 170, 0, 0.1);
+  color: var(--warning);
+  border-color: var(--warning);
+}
+
+.btn-warning:active {
+  background: rgba(255, 170, 0, 0.2);
+  box-shadow: 0 0 10px var(--warning);
+}
+
+.session-actions {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 8px;
+  padding: 15px;
+  margin-top: 10px;
+  border-top: 2px solid var(--border);
+}
+
 /* ═══════════ ANALYTICS ═══════════ */
 .analytics-grid {
   display: grid;
@@ -427,67 +667,6 @@ input:checked + .slider:before {
   font-weight: 700;
 }
 
-/* ═══════════ BUTTONS ═══════════ */
-.btn {
-  width: 100%;
-  padding: 14px;
-  border: 2px solid transparent;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 1px;
-  cursor: pointer;
-  transition: all 0.2s;
-  border-radius: 2px;
-  min-height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 8px;
-}
-
-.btn-primary {
-  background: var(--accent);
-  color: #fff;
-  border-color: var(--accent);
-}
-
-.btn-primary:active {
-  background: #cc0000;
-  box-shadow: 0 0 10px var(--accent);
-}
-
-.btn-secondary {
-  background: transparent;
-  color: #666;
-  border-color: var(--border);
-}
-
-.btn-secondary:active {
-  color: var(--gold);
-  border-color: var(--gold);
-}
-
-.btn-danger {
-  background: rgba(255, 68, 68, 0.1);
-  color: var(--error);
-  border-color: var(--error);
-}
-
-.btn-danger:active {
-  background: rgba(255, 68, 68, 0.2);
-  box-shadow: 0 0 10px var(--error);
-}
-
-.session-actions {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 8px;
-  padding: 15px;
-  margin-top: 10px;
-  border-top: 2px solid var(--border);
-}
-
 /* ═══════════ MODALS ═══════════ */
 .modal {
   display: none;
@@ -514,15 +693,32 @@ input:checked + .slider:before {
   max-width: 400px;
   width: 100%;
   border-radius: 2px;
-  min-height: auto;
 }
 
 .modal-title {
   font-family: 'Orbitron', sans-serif;
   font-size: 0.9rem;
   color: var(--accent);
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   margin-top: 0;
+}
+
+.modal-text {
+  color: var(--text);
+  font-family: 'Share Tech Mono';
+  font-size: 0.85rem;
+  line-height: 1.6;
+  margin: 15px 0;
+}
+
+.modal-warning {
+  background: rgba(255, 170, 0, 0.1);
+  border-left: 3px solid var(--warning);
+  padding: 10px 12px;
+  margin: 15px 0;
+  border-radius: 2px;
+  color: var(--warning);
+  font-size: 0.8rem;
 }
 
 .settings-group {
@@ -551,6 +747,16 @@ input:checked + .slider:before {
   background: var(--error);
 }
 
+.toast.warning {
+  background: var(--warning);
+  color: #000;
+}
+
+.toast.success {
+  background: var(--green);
+  color: #000;
+}
+
 @keyframes slideUp {
   from {
     transform: translateY(100px);
@@ -562,7 +768,7 @@ input:checked + .slider:before {
   }
 }
 
-/* ═══════════ MOBILE OPTIMIZATIONS ═══════════ */
+/* ═══════════ MOBILE ═══════════ */
 @media (max-width: 480px) {
   .header-hud {
     padding: 12px 16px;
@@ -573,17 +779,12 @@ input:checked + .slider:before {
     font-size: 1rem;
   }
 
-  .logo-sub {
-    font-size: 0.6rem;
-  }
-
   .tab {
-    font-size: 0.65rem;
-    padding: 14px 6px;
+    font-size: 0.6rem;
+    padding: 14px 4px;
   }
 
   .input-group {
-    grid-template-columns: 1fr 1fr 1fr;
     gap: 8px;
   }
 
@@ -592,31 +793,8 @@ input:checked + .slider:before {
     min-height: 44px;
   }
 
-  .input-box label {
-    font-size: 0.6rem;
-    margin-bottom: 4px;
-  }
-
-  .input-box input {
-    font-size: 1rem;
-  }
-
   .card {
     margin: 12px;
-  }
-
-  .card-body {
-    padding: 12px;
-  }
-
-  .session-actions {
-    padding: 12px;
-  }
-
-  .btn {
-    padding: 12px;
-    min-height: 44px;
-    font-size: 0.75rem;
   }
 
   .analytics-grid {
@@ -637,15 +815,6 @@ input:checked + .slider:before {
   :root {
     --border: #4a1010;
     --text: #ffffff;
-  }
-
-  .input-box label {
-    color: var(--gold);
-    font-weight: 700;
-  }
-
-  .tab.active {
-    border-bottom: 4px solid var(--accent);
   }
 }
 
@@ -669,6 +838,7 @@ input:checked + .slider:before {
 
 <div class="tab-bar">
   <div class="tab active" onclick="app.switchTab('dash', this)">DASH</div>
+  <div class="tab" onclick="app.switchTab('metrics', this)">METRICS</div>
   <div class="tab" onclick="app.switchTab('push', this)">PUSH</div>
   <div class="tab" onclick="app.switchTab('pull', this)">PULL</div>
   <div class="tab" onclick="app.switchTab('upper', this)">UPPER</div>
@@ -696,6 +866,8 @@ input:checked + .slider:before {
     </div>
   </div>
 
+  <div id="shift-indicator" class="shift-banner" style="display:none;"></div>
+
   <div class="card">
     <div class="card-header"><div class="card-title">// CURRENT PROTOCOL</div></div>
     <div class="card-body">
@@ -710,8 +882,50 @@ input:checked + .slider:before {
   </div>
 </div>
 
+<!-- METRICS TAB -->
+<div id="tab-metrics" style="display:none;">
+  <div class="metrics-container">
+    <div class="metric-section">
+      <div class="metric-section-title">// WEEKLY WEIGH-IN</div>
+      <div class="metric-card">
+        <div style="margin-bottom: 12px;">
+          <p style="margin: 0 0 10px 0; font-family: Share Tech Mono; font-size: 0.8rem; color: #aaa;">Log weight every Monday at 4:45 PM</p>
+        </div>
+        <div class="metric-input-group">
+          <div class="metric-input-box" style="grid-column: span 2;">
+            <label>CURRENT WEIGHT (LBS)</label>
+            <input type="number" id="metric-weight" placeholder="0" min="0" max="500" inputmode="decimal">
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="app.logWeight()" style="margin-bottom: 0;">LOG WEIGHT</button>
+        <div id="weight-history" style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);"></div>
+      </div>
+    </div>
+
+    <div class="metric-section">
+      <div class="metric-section-title">// DAILY SLEEP & ENERGY</div>
+      <div class="metric-card">
+        <p style="margin: 0 0 12px 0; font-family: Share Tech Mono; font-size: 0.8rem; color: #aaa;">Log when you wake up</p>
+        <div class="metric-input-group">
+          <div class="metric-input-box">
+            <label>SLEEP (HOURS)</label>
+            <input type="number" id="metric-sleep" placeholder="0" min="0" max="12" step="0.5" inputmode="decimal">
+          </div>
+          <div class="metric-input-box">
+            <label>ENERGY (1-10)</label>
+            <input type="number" id="metric-energy" placeholder="5" min="1" max="10" inputmode="decimal">
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="app.logSleep()" style="margin-bottom: 0;">LOG SLEEP</button>
+        <div id="sleep-history" style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div id="workout-container" style="display:none; padding: 0 15px 40px 15px;"></div>
 
+<!-- ANALYTICS TAB -->
 <div id="tab-analytics" style="display:none; padding-bottom: 40px;">
   <div class="analytics-grid" id="analytics-stats"></div>
   <div class="card">
@@ -734,7 +948,7 @@ input:checked + .slider:before {
     <h2 class="modal-title">// SYSTEM SETTINGS</h2>
     
     <div class="settings-group">
-      <div class="input-box" style="margin-bottom:10px">
+      <div class="metric-input-box">
         <label>ADJUST PROTEIN (G)</label>
         <input type="number" id="set-prot" value="175" min="0" max="300" inputmode="decimal">
       </div>
@@ -746,11 +960,33 @@ input:checked + .slider:before {
   </div>
 </div>
 
+<!-- SHIFT WARNING MODAL -->
+<div id="shift-warning-modal" class="modal">
+  <div class="modal-content">
+    <h2 class="modal-title">// SHIFT WARNING</h2>
+    
+    <div class="modal-warning">
+      ⚠ YOU WORKED LAST NIGHT
+    </div>
+    
+    <div class="modal-text">
+      You logged a work shift for today. Recovery may be compromised. Training after limited sleep can impact gains.
+    </div>
+
+    <div class="modal-text">
+      Do you want to proceed with this workout?
+    </div>
+
+    <button class="btn btn-danger" onclick="app.confirmShiftWorkout()">OVERRIDE - LOG WORKOUT</button>
+    <button class="btn btn-secondary" onclick="app.cancelShiftWorkout()">CANCEL</button>
+  </div>
+</div>
+
 <!-- CONFIRMATION MODAL -->
 <div id="confirm-modal" class="modal">
   <div class="modal-content">
     <h2 class="modal-title">// CONFIRM ACTION</h2>
-    <p style="color: var(--text); font-family: 'Share Tech Mono'; font-size: 0.9rem; margin: 15px 0;">
+    <p class="modal-text">
       <span id="confirm-message">Are you sure?</span>
     </p>
     <button class="btn btn-danger" onclick="app.executeConfirmedAction()">CONFIRM</button>
@@ -767,11 +1003,16 @@ const WORKOUTS = {
   upper: ["Incline Press", "Lat Pulldown (Alt)", "Lateral Raises", "Bicep Curl", "Tricep Ext", "Hammer Curl"]
 };
 
+// SHIFT SCHEDULE (day of week: 0=Sun, 1=Mon, etc.)
+// Mon(1), Tue(2), Thu(4), Sat(6) = WORK NIGHTS
+const WORK_NIGHTS = [1, 2, 4, 6];
+
 const app = {
   currentTab: 'dash',
   pendingConfirmAction: null,
+  pendingShiftWorkout: null,
   
-  // ═══════════ STORAGE OPERATIONS ═══════════
+  // ═══════════ STORAGE ═══════════
   getStoredData() {
     try {
       const data = localStorage.getItem(STORAGE_KEY);
@@ -787,7 +1028,11 @@ const app = {
       dutyMode: false,
       proteinTarget: 175,
       workouts: {},
-      sessions: [] // Array of completed sessions
+      sessions: [],
+      metrics: {
+        weigh_ins: [],
+        sleep_logs: []
+      }
     };
   },
 
@@ -797,6 +1042,29 @@ const app = {
     } catch (e) {
       console.error('Storage write error:', e);
       this.showToast('Storage error - check device space', 'error');
+    }
+  },
+
+  // ═══════════ SHIFT LOGIC ═══════════
+  isWorkNight(date) {
+    const d = new Date(date);
+    return WORK_NIGHTS.includes(d.getDay());
+  },
+
+  didWorkLastNight() {
+    const today = new Date();
+    const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000);
+    return this.isWorkNight(yesterday);
+  },
+
+  updateShiftIndicator() {
+    const banner = document.getElementById('shift-indicator');
+    if (this.didWorkLastNight()) {
+      banner.textContent = '⚠ WORKED LAST NIGHT - RECOVERY PRIORITY';
+      banner.classList.add('active');
+      banner.style.display = 'block';
+    } else {
+      banner.style.display = 'none';
     }
   },
 
@@ -825,6 +1093,121 @@ const app = {
     });
 
     return { lbs, reps, isValid: !hasError };
+  },
+
+  // ═══════════ METRICS ═══════════
+  logWeight() {
+    const weightInput = document.getElementById('metric-weight');
+    const weight = this.validateInput(weightInput.value, 100, 400);
+    
+    if (weight === null) {
+      this.showToast('Weight must be 100-400 lbs', 'error');
+      return;
+    }
+
+    const data = this.getStoredData();
+    const today = new Date().toISOString().split('T')[0];
+    
+    // Check if already logged today
+    const existing = data.metrics.weigh_ins.find(w => w.date === today);
+    if (existing) {
+      existing.weight = weight;
+      this.showToast('Weight updated', 'warning');
+    } else {
+      data.metrics.weigh_ins.push({ date: today, weight });
+      this.showToast('Weight logged ✓', 'success');
+    }
+
+    this.setStoredData(data);
+    weightInput.value = '';
+    this.renderWeightHistory();
+  },
+
+  logSleep() {
+    const sleepInput = document.getElementById('metric-sleep');
+    const energyInput = document.getElementById('metric-energy');
+    
+    const sleep = parseFloat(sleepInput.value);
+    const energy = parseInt(energyInput.value);
+
+    if (isNaN(sleep) || sleep < 0 || sleep > 12) {
+      this.showToast('Sleep must be 0-12 hours', 'error');
+      return;
+    }
+    if (isNaN(energy) || energy < 1 || energy > 10) {
+      this.showToast('Energy must be 1-10', 'error');
+      return;
+    }
+
+    const data = this.getStoredData();
+    const today = new Date().toISOString().split('T')[0];
+    
+    const existing = data.metrics.sleep_logs.find(s => s.date === today);
+    if (existing) {
+      existing.sleep = sleep;
+      existing.energy = energy;
+      this.showToast('Sleep updated', 'warning');
+    } else {
+      data.metrics.sleep_logs.push({ date: today, sleep, energy });
+      this.showToast('Sleep logged ✓', 'success');
+    }
+
+    this.setStoredData(data);
+    sleepInput.value = '';
+    energyInput.value = '5';
+    this.renderSleepHistory();
+  },
+
+  renderWeightHistory() {
+    const data = this.getStoredData();
+    const weigh_ins = data.metrics.weigh_ins.slice().reverse();
+
+    let html = '';
+    if (weigh_ins.length === 0) {
+      html = '<p style="color: #666; font-family: Share Tech Mono; font-size: 0.75rem;">No weigh-ins logged yet</p>';
+    } else {
+      weigh_ins.slice(0, 5).forEach((entry, idx) => {
+        const prev = weigh_ins[idx + 1];
+        const delta = prev ? (entry.weight - prev.weight).toFixed(1) : null;
+        const trend = delta === null ? '' : (delta > 0 ? `↑ ${delta} lbs` : `↓ ${delta} lbs`);
+        const trendColor = delta === null ? '#666' : (delta > 0 ? 'var(--accent)' : 'var(--green)');
+        
+        html += `
+          <div class="metric-row">
+            <div class="metric-label">${entry.date}</div>
+            <div>
+              <div class="metric-value">${entry.weight} LBS</div>
+              <div class="metric-trending" style="color: ${trendColor};">${trend}</div>
+            </div>
+          </div>
+        `;
+      });
+    }
+    document.getElementById('weight-history').innerHTML = html;
+  },
+
+  renderSleepHistory() {
+    const data = this.getStoredData();
+    const sleep_logs = data.metrics.sleep_logs.slice().reverse();
+
+    let html = '';
+    if (sleep_logs.length === 0) {
+      html = '<p style="color: #666; font-family: Share Tech Mono; font-size: 0.75rem;">No sleep logs yet</p>';
+    } else {
+      sleep_logs.slice(0, 7).forEach(entry => {
+        const energyColor = entry.energy >= 7 ? 'var(--green)' : (entry.energy >= 5 ? 'var(--gold)' : 'var(--error)');
+        html += `
+          <div class="metric-row">
+            <div class="metric-label">${entry.date}</div>
+            <div>
+              <div class="metric-value">${entry.sleep}h</div>
+              <div class="metric-trending" style="color: ${energyColor};">Energy: ${entry.energy}/10</div>
+            </div>
+          </div>
+        `;
+      });
+    }
+    document.getElementById('sleep-history').innerHTML = html;
   },
 
   // ═══════════ DUTY & SETTINGS ═══════════
@@ -856,7 +1239,6 @@ const app = {
     
     if (prot === null) {
       this.showToast('Protein must be 50-300g', 'error');
-      protInput.closest('.input-box').classList.add('error');
       return;
     }
 
@@ -889,6 +1271,27 @@ const app = {
     }
   },
 
+  // ═══════════ SHIFT WORKOUT ═══════════
+  checkShiftWarning(workoutType) {
+    if (this.didWorkLastNight()) {
+      this.pendingShiftWorkout = workoutType;
+      document.getElementById('shift-warning-modal').classList.add('active');
+      return true;
+    }
+    return false;
+  },
+
+  confirmShiftWorkout() {
+    document.getElementById('shift-warning-modal').classList.remove('active');
+    this.saveWorkout(this.pendingShiftWorkout, true);
+    this.pendingShiftWorkout = null;
+  },
+
+  cancelShiftWorkout() {
+    document.getElementById('shift-warning-modal').classList.remove('active');
+    this.pendingShiftWorkout = null;
+  },
+
   // ═══════════ TAB MANAGEMENT ═══════════
   switchTab(tab, el) {
     this.currentTab = tab;
@@ -897,20 +1300,24 @@ const app = {
     
     const cont = document.getElementById('workout-container');
     const dash = document.getElementById('tab-dash');
+    const metrics = document.getElementById('tab-metrics');
     const analytics = document.getElementById('tab-analytics');
     
+    [dash, metrics, cont, analytics].forEach(el => {
+      if (el) el.style.display = 'none';
+    });
+
     if (tab === 'dash') {
       dash.style.display = 'block';
-      cont.style.display = 'none';
-      analytics.style.display = 'none';
+      this.updateShiftIndicator();
+    } else if (tab === 'metrics') {
+      metrics.style.display = 'block';
+      this.renderWeightHistory();
+      this.renderSleepHistory();
     } else if (tab === 'analytics') {
-      dash.style.display = 'none';
-      cont.style.display = 'none';
       analytics.style.display = 'block';
       this.renderAnalytics();
     } else {
-      dash.style.display = 'none';
-      analytics.style.display = 'none';
       cont.style.display = 'block';
       this.renderWorkout(tab);
     }
@@ -949,6 +1356,11 @@ const app = {
     });
 
     html += `
+      <div style="padding: 15px; margin: 0 15px 15px 15px; background: #000; border: 2px solid var(--border); border-radius: 2px;">
+        <label class="notes-label">SESSION NOTES (OPTIONAL)</label>
+        <textarea class="notes-input" id="session-notes" placeholder="How did you feel? Any adjustments? Recovery notes?"></textarea>
+      </div>
+
       <div class="session-actions">
         <button class="btn btn-primary" onclick="app.saveWorkout('${workoutKey}')">SAVE SESSION</button>
         <button class="btn btn-secondary" onclick="app.resetWorkout('${workoutKey}')">RESET</button>
@@ -958,14 +1370,21 @@ const app = {
     cont.innerHTML = html;
   },
 
-  saveWorkout(workoutKey) {
+  saveWorkout(workoutKey, overrideShiftWarning = false) {
+    // Check shift warning first
+    if (!overrideShiftWarning && this.checkShiftWarning(workoutKey)) {
+      return;
+    }
+
     const rows = document.querySelectorAll('.workout-row');
     const data = this.getStoredData();
     const workoutData = {};
     const sessionData = {
       date: new Date().toISOString().split('T')[0],
       type: workoutKey,
-      exercises: []
+      exercises: [],
+      post_shift: this.didWorkLastNight(),
+      notes: document.getElementById('session-notes')?.value || ''
     };
     let hasErrors = false;
     let totalVolume = 0;
@@ -982,7 +1401,6 @@ const app = {
           lbs: validation.lbs,
           reps: validation.reps
         };
-        // Volume = weight × reps × sets (3)
         const volume = validation.lbs * validation.reps * 3;
         totalVolume += volume;
         sessionData.exercises.push({
@@ -1010,7 +1428,9 @@ const app = {
     data.sessions.push(sessionData);
     this.setStoredData(data);
     this.updateWeeklyVolume();
-    this.showToast(`${workoutKey.toUpperCase()} session saved • ${totalVolume} lbs volume`, 'success');
+    
+    const postShiftNote = sessionData.post_shift ? ' [POST-SHIFT]' : '';
+    this.showToast(`${workoutKey.toUpperCase()} saved${postShiftNote}`, 'success');
   },
 
   resetWorkout(workoutKey) {
@@ -1020,6 +1440,8 @@ const app = {
         input.closest('.input-box').classList.remove('error');
       });
     });
+    const notesInput = document.getElementById('session-notes');
+    if (notesInput) notesInput.value = '';
   },
 
   // ═══════════ ANALYTICS ═══════════
@@ -1027,12 +1449,9 @@ const app = {
     const data = this.getStoredData();
     const sessions = data.sessions || [];
 
-    // Weekly volume
     const weekVolume = this.getWeeklyVolume(sessions);
     const totalSessions = sessions.length;
     const avgVolume = totalSessions > 0 ? Math.round(weekVolume / Math.max(1, this.getWeeksCount(sessions))) : 0;
-
-    // PRs per exercise
     const prs = this.calculatePRs(sessions);
 
     let statsHtml = `
@@ -1060,7 +1479,6 @@ const app = {
 
     document.getElementById('analytics-stats').innerHTML = statsHtml;
 
-    // PRs list
     let prHtml = '';
     if (Object.keys(prs).length === 0) {
       prHtml = '<p style="color: #666; font-family: Share Tech Mono; text-align: center; padding: 20px;">No PRs recorded yet. Start logging!</p>';
@@ -1077,18 +1495,19 @@ const app = {
     }
     document.getElementById('pr-list').innerHTML = prHtml;
 
-    // Session history
     let historyHtml = '';
     if (sessions.length === 0) {
       historyHtml = '<p style="color: #666; font-family: Share Tech Mono; text-align: center; padding: 20px;">No sessions logged yet.</p>';
     } else {
       sessions.slice().reverse().forEach(session => {
         const exList = session.exercises.map(ex => `${ex.name} (${ex.lbs}×${ex.reps})`).join(', ');
+        const postShiftBadge = session.post_shift ? ' <span class="pr-badge" style="background: var(--warning); margin-left: 8px;">POST-SHIFT</span>' : '';
         historyHtml += `
           <div class="history-entry">
-            <div class="history-entry-date">${session.date} • ${session.type.toUpperCase()}</div>
+            <div class="history-entry-date">${session.date} • ${session.type.toUpperCase()}${postShiftBadge}</div>
             <div class="history-entry-data" style="font-size: 0.7rem;">${exList}</div>
             <div class="stat-meta">${session.totalVolume} lbs total volume</div>
+            ${session.notes ? `<div class="stat-meta" style="color: var(--cyan); margin-top: 4px;">📝 ${session.notes}</div>` : ''}
           </div>
         `;
       });
@@ -1142,10 +1561,11 @@ const app = {
       return;
     }
 
-    let csv = 'Date,Workout Type,Exercise,Weight (lbs),Reps,Sets,Volume (lbs)\n';
+    let csv = 'Date,Workout Type,Exercise,Weight (lbs),Reps,Sets,Volume (lbs),Post-Shift,Notes\n';
     sessions.forEach(session => {
       session.exercises.forEach(ex => {
-        csv += `${session.date},${session.type},${ex.name},${ex.lbs},${ex.reps},${ex.sets},${ex.volume}\n`;
+        const notes = session.notes ? `"${session.notes}"` : '';
+        csv += `${session.date},${session.type},${ex.name},${ex.lbs},${ex.reps},${ex.sets},${ex.volume},${session.post_shift ? 'YES' : 'NO'},${notes}\n`;
       });
     });
 
@@ -1159,7 +1579,7 @@ const app = {
     this.showToast('Data exported', 'success');
   },
 
-  // ═══════════ CLOCK & FASTING STATUS ═══════════
+  // ═══════════ CLOCK & FASTING ═══════════
   updateClock() {
     const now = new Date();
     const time = now.getHours() + (now.getMinutes() / 60);
@@ -1172,7 +1592,7 @@ const app = {
   // ═══════════ UI FEEDBACK ═══════════
   showToast(message, type = 'success') {
     const toast = document.createElement('div');
-    toast.className = `toast ${type === 'error' ? 'error' : ''}`;
+    toast.className = `toast ${type === 'error' ? 'error' : type === 'warning' ? 'warning' : 'success'}`;
     toast.textContent = message;
     document.body.appendChild(toast);
 
@@ -1184,22 +1604,19 @@ const app = {
 
   // ═══════════ INITIALIZATION ═══════════
   init() {
-    // Load persisted duty state
     const data = this.getStoredData();
     const dutyToggle = document.getElementById('duty-toggle');
     dutyToggle.checked = data.dutyMode;
     this.toggleDuty();
 
-    // Update weekly volume on dash
     this.updateWeeklyVolume();
+    this.updateShiftIndicator();
 
-    // Start clock
     setInterval(() => this.updateClock(), 60000);
     this.updateClock();
 
-    // Prevent body scroll with virtual keyboard
     document.addEventListener('focusin', (e) => {
-      if (e.target.matches('input[type="number"]')) {
+      if (e.target.matches('input[type="number"], textarea')) {
         setTimeout(() => {
           e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }, 300);
@@ -1208,7 +1625,6 @@ const app = {
   }
 };
 
-// Initialize on page load
 document.addEventListener('DOMContentLoaded', () => app.init());
 </script>
 </body>
