@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>NIGHTWATCH BEYOND // LOHNES</title>
@@ -18,6 +18,16 @@
   --gold: #c5a059;
   --cyan: #00f2ff;
   --green: #00ff88;
+  --error: #ff4444;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
 }
 
 body {
@@ -28,20 +38,26 @@ body {
   padding: 0;
   overflow-x: hidden;
   text-transform: uppercase;
+  /* Prevent zoom on iOS */
+  -webkit-user-scalable: no;
+  user-scalable: no;
+  /* Prevent rubber-band scroll */
+  overscroll-behavior: none;
 }
 
 /* ═══════════ TOP NAV / HUD ═══════════ */
 .header-hud {
-  padding: 20px;
-  border-bottom: 1px solid var(--border);
+  padding: 16px 20px;
+  border-bottom: 2px solid var(--border);
   background: linear-gradient(180deg, var(--panel) 0%, var(--bg) 100%);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 15px;
 }
 
 .logo-block {
-  border-left: 3px solid var(--accent);
+  border-left: 4px solid var(--accent);
   padding-left: 12px;
 }
 
@@ -51,12 +67,14 @@ body {
   font-size: 1.2rem;
   letter-spacing: 2px;
   color: #fff;
+  margin: 0;
 }
 
 .logo-sub {
   font-family: 'Share Tech Mono', monospace;
   font-size: 0.7rem;
   color: var(--accent);
+  margin: 2px 0 0 0;
 }
 
 /* ═══════════ DUTY TOGGLE ═══════════ */
@@ -64,64 +82,102 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 5px;
+  gap: 8px;
+  min-width: 80px;
+}
+
+.toggle-group .logo-sub {
+  min-height: 16px;
 }
 
 .switch {
   position: relative;
   display: inline-block;
-  width: 50px;
-  height: 24px;
+  width: 56px;
+  height: 28px;
+  /* Better touch target */
+  min-height: 44px;
+  min-width: 44px;
 }
 
-.switch input { opacity: 0; width: 0; height: 0; }
+.switch input { 
+  opacity: 0; 
+  width: 0; 
+  height: 0;
+  position: absolute;
+}
 
 .slider {
   position: absolute;
   cursor: pointer;
   top: 0; left: 0; right: 0; bottom: 0;
   background-color: #1a0505;
-  border: 1px solid var(--border);
-  transition: .4s;
+  border: 2px solid var(--border);
+  transition: .3s;
+  border-radius: 4px;
 }
 
 .slider:before {
   position: absolute;
   content: "";
-  height: 16px; width: 16px;
-  left: 4px; bottom: 3px;
+  height: 18px; 
+  width: 18px;
+  left: 4px; 
+  bottom: 3px;
   background-color: var(--accent);
-  transition: .4s;
-  box-shadow: 0 0 10px var(--accent);
+  transition: .3s;
+  box-shadow: 0 0 12px var(--accent);
+  border-radius: 2px;
 }
 
-input:checked + .slider { background-color: #300; }
-input:checked + .slider:before { transform: translateX(24px); }
+input:checked + .slider { 
+  background-color: rgba(255, 0, 0, 0.2);
+  border-color: var(--accent);
+}
+input:checked + .slider:before { 
+  transform: translateX(26px); 
+}
 
 /* ═══════════ TABS ═══════════ */
 .tab-bar {
   display: flex;
   background: var(--panel);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 2px solid var(--border);
   position: sticky;
   top: 0;
   z-index: 100;
+  /* Better scrolling */
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
 .tab {
   flex: 1;
-  padding: 15px 5px;
+  min-width: 60px;
+  padding: 16px 8px;
   text-align: center;
   font-family: 'Orbitron', sans-serif;
-  font-size: 0.7rem;
-  color: #444;
+  font-size: 0.75rem;
+  color: #555;
   letter-spacing: 1px;
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s;
+  /* Better touch target */
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tab:active {
+  background: rgba(255, 0, 0, 0.1);
 }
 
 .tab.active {
   color: var(--accent);
-  border-bottom: 2px solid var(--accent);
-  background: rgba(255,0,0,0.05);
+  border-bottom: 3px solid var(--accent);
+  background: rgba(255,0,0,0.08);
 }
 
 /* ═══════════ HUD TILES ═══════════ */
@@ -132,12 +188,20 @@ input:checked + .slider:before { transform: translateX(24px); }
   padding: 15px;
 }
 
+@media (max-width: 480px) {
+  .hud-grid {
+    gap: 8px;
+    padding: 12px;
+  }
+}
+
 .tile {
   background: var(--panel);
-  border: 1px solid var(--border);
+  border: 2px solid var(--border);
   padding: 15px;
   position: relative;
   overflow: hidden;
+  border-radius: 2px;
 }
 
 .tile::after {
@@ -152,48 +216,77 @@ input:checked + .slider:before { transform: translateX(24px); }
   font-family: 'Share Tech Mono', monospace;
   font-size: 0.65rem;
   color: var(--gold);
+  opacity: 0.9;
 }
 
 .tile-val {
   font-family: 'Orbitron', sans-serif;
   font-size: 1.3rem;
   font-weight: 700;
-  margin-top: 5px;
+  margin-top: 8px;
   color: #fff;
 }
 
 /* ═══════════ CARDS ═══════════ */
 .card {
   background: var(--panel);
-  border: 1px solid var(--border);
+  border: 2px solid var(--border);
   margin: 15px;
   padding: 0;
+  border-radius: 2px;
 }
 
 .card-header {
-  background: rgba(255,0,0,0.1);
-  padding: 10px 15px;
-  border-bottom: 1px solid var(--border);
+  background: rgba(255,0,0,0.08);
+  padding: 12px 15px;
+  border-bottom: 2px solid var(--border);
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  gap: 10px;
 }
 
 .card-title {
   font-family: 'Orbitron', sans-serif;
   font-size: 0.8rem;
   color: var(--accent);
+  margin: 0;
 }
 
-.card-body { padding: 15px; }
+.card-body { 
+  padding: 15px;
+}
+
+.card-body-text {
+  font-family:'Share Tech Mono'; 
+  font-size:0.85rem; 
+  color:#aaa; 
+  line-height:1.6;
+}
 
 /* ═══════════ WORKOUT TABLE ═══════════ */
 .workout-row {
   border-bottom: 1px solid var(--border);
-  padding: 15px 0;
+  padding: 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.ex-info { margin-bottom: 10px; }
-.ex-name { font-family: 'Orbitron'; font-size: 0.9rem; color: #fff; }
+.workout-row:last-child {
+  border-bottom: none;
+}
+
+.ex-info { 
+  margin-bottom: 5px;
+}
+
+.ex-name { 
+  font-family: 'Orbitron'; 
+  font-size: 0.9rem; 
+  color: var(--cyan);
+  font-weight: 600;
+}
 
 .input-group {
   display: grid;
@@ -203,16 +296,27 @@ input:checked + .slider:before { transform: translateX(24px); }
 
 .input-box {
   background: #000;
-  border: 1px solid var(--border);
-  padding: 8px;
+  border: 2px solid var(--border);
+  padding: 10px 8px;
   text-align: center;
+  border-radius: 2px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.input-box.error {
+  border-color: var(--error);
+  background: rgba(255, 68, 68, 0.05);
 }
 
 .input-box label {
   display: block;
-  font-size: 0.6rem;
+  font-size: 0.65rem;
   color: var(--gold);
-  margin-bottom: 3px;
+  margin-bottom: 6px;
+  font-weight: 600;
 }
 
 .input-box input {
@@ -222,8 +326,97 @@ input:checked + .slider:before { transform: translateX(24px); }
   width: 100%;
   font-family: 'Share Tech Mono';
   font-size: 1.1rem;
+  font-weight: 600;
   text-align: center;
   outline: none;
+  /* Ensure keyboard doesn't cover input */
+  padding: 4px 0;
+}
+
+.input-box input::placeholder {
+  color: #555;
+}
+
+.input-box input:focus {
+  color: var(--cyan);
+  background: rgba(0, 242, 255, 0.05);
+}
+
+.input-box.static-val {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 8px;
+  min-height: 56px;
+}
+
+.input-box.static-val > div {
+  font-family:'Orbitron'; 
+  color:var(--accent); 
+  font-size:1.1rem;
+  font-weight: 700;
+}
+
+/* ═══════════ BUTTONS ═══════════ */
+.btn {
+  width: 100%;
+  padding: 14px;
+  border: 2px solid transparent;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-radius: 2px;
+  /* Better touch target */
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.btn-primary:active {
+  background: #cc0000;
+  box-shadow: 0 0 10px var(--accent);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: #666;
+  border-color: var(--border);
+}
+
+.btn-secondary:active {
+  color: var(--gold);
+  border-color: var(--gold);
+}
+
+.btn-danger {
+  background: rgba(255, 68, 68, 0.1);
+  color: var(--error);
+  border-color: var(--error);
+}
+
+.btn-danger:active {
+  background: rgba(255, 68, 68, 0.2);
+  box-shadow: 0 0 10px var(--error);
+}
+
+.session-actions {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 8px;
+  padding: 15px;
+  margin-top: 10px;
+  border-top: 2px solid var(--border);
 }
 
 /* ═══════════ SETTINGS MODAL ═══════════ */
@@ -231,18 +424,165 @@ input:checked + .slider:before { transform: translateX(24px); }
   display: none;
   position: fixed;
   top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(0,0,0,0.9);
+  background: rgba(0,0,0,0.95);
   z-index: 1000;
   padding: 20px;
   box-sizing: border-box;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal.active {
+  display: flex;
 }
 
 .modal-content {
   background: var(--panel);
-  border: 1px solid var(--accent);
+  border: 2px solid var(--accent);
   padding: 20px;
   max-width: 400px;
-  margin: auto;
+  width: 100%;
+  border-radius: 2px;
+  min-height: auto;
+}
+
+.modal-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.9rem;
+  color: var(--accent);
+  margin-bottom: 20px;
+  margin-top: 0;
+}
+
+.settings-group {
+  margin-bottom: 15px;
+}
+
+/* ═══════════ TOAST NOTIFICATIONS ═══════════ */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  max-width: 400px;
+  background: var(--accent);
+  color: #fff;
+  padding: 12px 16px;
+  border-radius: 2px;
+  z-index: 2000;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.8rem;
+  animation: slideUp 0.3s ease-out;
+  box-shadow: 0 4px 12px rgba(255, 0, 0, 0.3);
+}
+
+.toast.error {
+  background: var(--error);
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ═══════════ MOBILE OPTIMIZATIONS ═══════════ */
+@media (max-width: 480px) {
+  .header-hud {
+    padding: 12px 16px;
+    gap: 10px;
+  }
+
+  .logo-main {
+    font-size: 1rem;
+  }
+
+  .logo-sub {
+    font-size: 0.6rem;
+  }
+
+  .tab {
+    font-size: 0.65rem;
+    padding: 14px 6px;
+  }
+
+  .input-group {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+  }
+
+  .input-box {
+    padding: 8px;
+    min-height: 44px;
+  }
+
+  .input-box label {
+    font-size: 0.6rem;
+    margin-bottom: 4px;
+  }
+
+  .input-box input {
+    font-size: 1rem;
+  }
+
+  .card {
+    margin: 12px;
+  }
+
+  .card-body {
+    padding: 12px;
+  }
+
+  .session-actions {
+    padding: 12px;
+  }
+
+  .btn {
+    padding: 12px;
+    min-height: 44px;
+    font-size: 0.75rem;
+  }
+}
+
+/* ═══════════ ACCESSIBILITY ═══════════ */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode for accessibility */
+@media (prefers-contrast: more) {
+  :root {
+    --border: #4a1010;
+    --text: #ffffff;
+  }
+
+  .input-box label {
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  .tab.active {
+    border-bottom: 4px solid var(--accent);
+  }
+}
+
+/* Dark mode detection (already dark, but future-proof) */
+@media (prefers-color-scheme: light) {
+  /* Force dark theme regardless */
+  :root {
+    --bg: #000000;
+  }
 }
 
 </style>
@@ -257,18 +597,18 @@ input:checked + .slider:before { transform: translateX(24px); }
   <div class="toggle-group">
     <div class="logo-sub" id="status-text" style="color:var(--gold)">OFF-DUTY</div>
     <label class="switch">
-      <input type="checkbox" id="duty-toggle" onchange="toggleDuty()">
+      <input type="checkbox" id="duty-toggle" onchange="app.toggleDuty()">
       <span class="slider"></span>
     </label>
   </div>
 </div>
 
 <div class="tab-bar">
-  <div class="tab active" onclick="setTab('dash', this)">DASH</div>
-  <div class="tab" onclick="setTab('push', this)">PUSH</div>
-  <div class="tab" onclick="setTab('pull', this)">PULL</div>
-  <div class="tab" onclick="setTab('upper', this)">UPPER</div>
-  <div class="tab" onclick="openSettings()">OPTS</div>
+  <div class="tab active" onclick="app.switchTab('dash', this)">DASH</div>
+  <div class="tab" onclick="app.switchTab('push', this)">PUSH</div>
+  <div class="tab" onclick="app.switchTab('pull', this)">PULL</div>
+  <div class="tab" onclick="app.switchTab('upper', this)">UPPER</div>
+  <div class="tab" onclick="app.openSettings()">OPTS</div>
 </div>
 
 <div id="tab-dash">
@@ -294,7 +634,7 @@ input:checked + .slider:before { transform: translateX(24px); }
   <div class="card">
     <div class="card-header"><div class="card-title">// CURRENT PROTOCOL</div></div>
     <div class="card-body">
-      <div style="font-family:'Share Tech Mono'; font-size:0.85rem; color:#aaa; line-height:1.6;">
+      <div class="card-body-text">
         FAST ENDS: <span style="color:#fff">19:30</span><br>
         MEAL 1: <span style="color:#fff">7:30 PM (700 CAL)</span><br>
         MEAL 2: <span style="color:#fff">11:30 PM (700 CAL)</span><br>
@@ -310,76 +650,312 @@ input:checked + .slider:before { transform: translateX(24px); }
 <!-- SETTINGS MODAL -->
 <div id="settings-modal" class="modal">
   <div class="modal-content">
-    <div class="card-title" style="margin-bottom:20px">// SYSTEM SETTINGS</div>
-    <div class="input-box" style="margin-bottom:10px">
-      <label>ADJUST PROTEIN (G)</label>
-      <input type="number" id="set-prot" value="175">
+    <h2 class="modal-title">// SYSTEM SETTINGS</h2>
+    
+    <div class="settings-group">
+      <div class="input-box" style="margin-bottom:10px">
+        <label>ADJUST PROTEIN (G)</label>
+        <input type="number" id="set-prot" value="175" min="0" max="300" inputmode="decimal">
+      </div>
     </div>
-    <button onclick="saveSettings()" style="width:100%; padding:15px; background:var(--accent); color:#fff; border:none; font-family:'Orbitron';">UPDATE SYSTEM</button>
-    <button onclick="closeSettings()" style="width:100%; padding:10px; background:transparent; color:#666; border:none; font-family:'Orbitron'; margin-top:10px;">CANCEL</button>
+
+    <button class="btn btn-primary" onclick="app.saveSettings()">UPDATE SYSTEM</button>
+    <button class="btn btn-secondary" onclick="app.closeSettings()">CANCEL</button>
+    <button class="btn btn-danger" onclick="app.confirmClearData()">CLEAR ALL DATA</button>
+  </div>
+</div>
+
+<!-- CONFIRMATION MODAL -->
+<div id="confirm-modal" class="modal">
+  <div class="modal-content">
+    <h2 class="modal-title">// CONFIRM ACTION</h2>
+    <p style="color: var(--text); font-family: 'Share Tech Mono'; font-size: 0.9rem; margin: 15px 0;">
+      <span id="confirm-message">Are you sure?</span>
+    </p>
+    <button class="btn btn-danger" onclick="app.executeConfirmedAction()">CONFIRM</button>
+    <button class="btn btn-secondary" onclick="app.cancelConfirm()">CANCEL</button>
   </div>
 </div>
 
 <script>
-const DATA = {
+// ═══════════ APP STATE & STORAGE ═══════════
+const STORAGE_KEY = 'nightwatch_data';
+const WORKOUTS = {
   push: ["Dumbbell Bench Press", "Incline DB Press", "Shoulder Press", "Lateral Raises", "Triceps Pushdowns", "Push-ups to Failure"],
   pull: ["Lat Pulldown", "Seated Cable Row", "Dumbbell Row", "DB Bicep Curl", "Hammer Curl", "Cable Burnout"],
   upper: ["Incline Press", "Lat Pulldown (Alt)", "Lateral Raises", "Bicep Curl", "Tricep Ext", "Hammer Curl"]
 };
 
-function toggleDuty() {
-  const isDuty = document.getElementById('duty-toggle').checked;
-  document.getElementById('status-text').textContent = isDuty ? "ON-SHIFT" : "OFF-DUTY";
-  document.getElementById('status-text').style.color = isDuty ? "var(--accent)" : "var(--gold)";
-  document.getElementById('target-cal').textContent = isDuty ? "2,089" : "1,899";
-  document.getElementById('target-cal').style.color = isDuty ? "var(--accent)" : "var(--gold)";
-}
-
-function setTab(tab, el) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
-  const cont = document.getElementById('workout-container');
-  const dash = document.getElementById('tab-dash');
+const app = {
+  currentTab: 'dash',
+  pendingConfirmAction: null,
   
-  if(tab === 'dash') {
-    dash.style.display = 'block'; cont.style.display = 'none';
-  } else {
-    dash.style.display = 'none'; cont.style.display = 'block';
-    cont.innerHTML = `<div class="card-title" style="margin:20px 0 10px 0">// ${tab.toUpperCase()} SESSION</div>` + 
-    DATA[tab].map(ex => `
-      <div class="workout-row">
-        <div class="ex-info"><span class="ex-name">${ex}</span></div>
-        <div class="input-group">
-          <div class="input-box"><label>LBS</label><input type="number" placeholder="0"></div>
-          <div class="input-group" style="grid-column: span 2;">
-            <div class="input-box"><label>REPS (8-12)</label><input type="number" placeholder="0"></div>
-            <div class="input-box"><label>SETS</label><div style="font-family:'Orbitron'; color:var(--accent); font-size:1.1rem; padding-top:4px;">3</div></div>
+  // ═══════════ STORAGE OPERATIONS ═══════════
+  getStoredData() {
+    try {
+      const data = localStorage.getItem(STORAGE_KEY);
+      return data ? JSON.parse(data) : this.getDefaultData();
+    } catch (e) {
+      console.error('Storage read error:', e);
+      return this.getDefaultData();
+    }
+  },
+
+  getDefaultData() {
+    return {
+      dutyMode: false,
+      proteinTarget: 175,
+      workouts: {}
+    };
+  },
+
+  setStoredData(data) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    } catch (e) {
+      console.error('Storage write error:', e);
+      this.showToast('Storage error - check device space', 'error');
+    }
+  },
+
+  // ═══════════ VALIDATION ═══════════
+  validateInput(value, min = 0, max = 500) {
+    if (value === '' || value === null || value === undefined) return null;
+    const num = parseFloat(value);
+    if (isNaN(num)) return null;
+    return Math.max(min, Math.min(max, Math.floor(num)));
+  },
+
+  validateWorkoutRow(inputs) {
+    const [lbsInput, repsInput] = inputs;
+    const lbs = this.validateInput(lbsInput.value, 0, 500);
+    const reps = this.validateInput(repsInput.value, 1, 30);
+
+    const hasError = lbs === null || reps === null;
+    
+    inputs.forEach((input, idx) => {
+      const box = input.closest('.input-box');
+      if ((idx === 0 && lbs === null) || (idx === 1 && reps === null)) {
+        box.classList.add('error');
+      } else {
+        box.classList.remove('error');
+      }
+    });
+
+    return { lbs, reps, isValid: !hasError };
+  },
+
+  // ═══════════ DUTY & SETTINGS ═══════════
+  toggleDuty() {
+    const isDuty = document.getElementById('duty-toggle').checked;
+    const data = this.getStoredData();
+    data.dutyMode = isDuty;
+    this.setStoredData(data);
+
+    document.getElementById('status-text').textContent = isDuty ? "ON-SHIFT" : "OFF-DUTY";
+    document.getElementById('status-text').style.color = isDuty ? "var(--accent)" : "var(--gold)";
+    document.getElementById('target-cal').textContent = isDuty ? "2,089" : "1,899";
+    document.getElementById('target-cal').style.color = isDuty ? "var(--accent)" : "var(--gold)";
+  },
+
+  openSettings() {
+    const data = this.getStoredData();
+    document.getElementById('set-prot').value = data.proteinTarget;
+    document.getElementById('settings-modal').classList.add('active');
+  },
+
+  closeSettings() {
+    document.getElementById('settings-modal').classList.remove('active');
+  },
+
+  saveSettings() {
+    const protInput = document.getElementById('set-prot');
+    const prot = this.validateInput(protInput.value, 50, 300);
+    
+    if (prot === null) {
+      this.showToast('Protein must be 50-300g', 'error');
+      protInput.closest('.input-box').classList.add('error');
+      return;
+    }
+
+    const data = this.getStoredData();
+    data.proteinTarget = prot;
+    this.setStoredData(data);
+    
+    document.getElementById('target-prot').textContent = prot + "G";
+    this.closeSettings();
+    this.showToast('Settings updated', 'success');
+  },
+
+  confirmClearData() {
+    this.pendingConfirmAction = 'clearData';
+    document.getElementById('confirm-message').textContent = 'Permanently clear all workout data? This cannot be undone.';
+    document.getElementById('confirm-modal').classList.add('active');
+  },
+
+  cancelConfirm() {
+    this.pendingConfirmAction = null;
+    document.getElementById('confirm-modal').classList.remove('active');
+  },
+
+  executeConfirmedAction() {
+    if (this.pendingConfirmAction === 'clearData') {
+      localStorage.removeItem(STORAGE_KEY);
+      this.cancelConfirm();
+      this.showToast('All data cleared', 'success');
+      // Reload to reset UI
+      setTimeout(() => location.reload(), 500);
+    }
+  },
+
+  // ═══════════ TAB MANAGEMENT ═══════════
+  switchTab(tab, el) {
+    this.currentTab = tab;
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    
+    const cont = document.getElementById('workout-container');
+    const dash = document.getElementById('tab-dash');
+    
+    if (tab === 'dash') {
+      dash.style.display = 'block';
+      cont.style.display = 'none';
+    } else {
+      dash.style.display = 'none';
+      cont.style.display = 'block';
+      this.renderWorkout(tab);
+    }
+  },
+
+  renderWorkout(workoutKey) {
+    const cont = document.getElementById('workout-container');
+    const exercises = WORKOUTS[workoutKey];
+    const data = this.getStoredData();
+    const workoutData = data.workouts[workoutKey] || {};
+
+    let html = `<div class="card-title" style="margin:20px 0 10px 0 15px">// ${workoutKey.toUpperCase()} SESSION</div>`;
+    
+    exercises.forEach((exercise, idx) => {
+      const stored = workoutData[idx] || {};
+      html += `
+        <div class="workout-row">
+          <div class="ex-info"><span class="ex-name">${exercise}</span></div>
+          <div class="input-group">
+            <div class="input-box">
+              <label>LBS</label>
+              <input type="number" class="ex-lbs" value="${stored.lbs || ''}" placeholder="0" min="0" max="500" inputmode="decimal">
+            </div>
+            <div class="input-group" style="grid-column: span 2;">
+              <div class="input-box">
+                <label>REPS (8-12)</label>
+                <input type="number" class="ex-reps" value="${stored.reps || ''}" placeholder="0" min="1" max="30" inputmode="decimal">
+              </div>
+              <div class="input-box static-val">
+                <div>3</div>
+              </div>
+            </div>
           </div>
         </div>
+      `;
+    });
+
+    html += `
+      <div class="session-actions">
+        <button class="btn btn-primary" onclick="app.saveWorkout('${workoutKey}')">SAVE SESSION</button>
+        <button class="btn btn-secondary" onclick="app.resetWorkout('${workoutKey}')">RESET</button>
       </div>
-    `).join('');
+    `;
+
+    cont.innerHTML = html;
+  },
+
+  saveWorkout(workoutKey) {
+    const rows = document.querySelectorAll('.workout-row');
+    const data = this.getStoredData();
+    const workoutData = {};
+    let hasErrors = false;
+
+    rows.forEach((row, idx) => {
+      const inputs = row.querySelectorAll('input[type="number"]');
+      const validation = this.validateWorkoutRow(inputs);
+      
+      if (!validation.isValid) {
+        hasErrors = true;
+      } else {
+        workoutData[idx] = {
+          lbs: validation.lbs,
+          reps: validation.reps
+        };
+      }
+    });
+
+    if (hasErrors) {
+      this.showToast('Fix errors before saving', 'error');
+      return;
+    }
+
+    data.workouts[workoutKey] = workoutData;
+    this.setStoredData(data);
+    this.showToast(`${workoutKey.toUpperCase()} session saved`, 'success');
+  },
+
+  resetWorkout(workoutKey) {
+    document.querySelectorAll('.workout-row').forEach(row => {
+      row.querySelectorAll('input[type="number"]').forEach(input => {
+        input.value = '';
+        input.closest('.input-box').classList.remove('error');
+      });
+    });
+  },
+
+  // ═══════════ CLOCK & FASTING STATUS ═══════════
+  updateClock() {
+    const now = new Date();
+    const time = now.getHours() + (now.getMinutes() / 60);
+    const isFast = (time >= 3.5 && time < 19.5);
+    const el = document.getElementById('fast-status');
+    el.textContent = isFast ? "FASTING" : "FEEDING";
+    el.style.color = isFast ? "var(--cyan)" : "var(--green)";
+  },
+
+  // ═══════════ UI FEEDBACK ═══════════
+  showToast(message, type = 'success') {
+    const toast = document.createElement('div');
+    toast.className = `toast ${type === 'error' ? 'error' : ''}`;
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+      toast.style.animation = 'slideUp 0.3s ease-out reverse';
+      setTimeout(() => toast.remove(), 300);
+    }, 2500);
+  },
+
+  // ═══════════ INITIALIZATION ═══════════
+  init() {
+    // Load persisted duty state
+    const data = this.getStoredData();
+    const dutyToggle = document.getElementById('duty-toggle');
+    dutyToggle.checked = data.dutyMode;
+    this.toggleDuty(); // Update UI
+
+    // Start clock
+    setInterval(() => this.updateClock(), 60000);
+    this.updateClock();
+
+    // Prevent body scroll with virtual keyboard
+    document.addEventListener('focusin', (e) => {
+      if (e.target.matches('input[type="number"]')) {
+        setTimeout(() => {
+          e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 300);
+      }
+    });
   }
-}
+};
 
-function updateClock() {
-  const now = new Date();
-  const time = now.getHours() + (now.getMinutes()/60);
-  const isFast = (time >= 3.5 && time < 19.5);
-  const el = document.getElementById('fast-status');
-  el.textContent = isFast ? "FASTING" : "FEEDING";
-  el.style.color = isFast ? "var(--cyan)" : "var(--green)";
-}
-
-function openSettings() { document.getElementById('settings-modal').style.display = 'flex'; }
-function closeSettings() { document.getElementById('settings-modal').style.display = 'none'; }
-function saveSettings() {
-  const prot = document.getElementById('set-prot').value;
-  document.getElementById('target-prot').textContent = prot + "G";
-  closeSettings();
-}
-
-setInterval(updateClock, 60000);
-updateClock();
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', () => app.init());
 </script>
 </body>
 </html>
